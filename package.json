@@ -1,0 +1,26 @@
+{
+  "name": "informationretrievalassignment",
+  "version": "1.0.0",
+  "description": "Repository for cs6200 information retrieval course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuqzhong/InformationRetrievalAssignment.git"
+  },
+  "author": "Yuqing Zhong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuqzhong/InformationRetrievalAssignment/issues"
+  },
+  "homepage": "https://github.com/yuqzhong/InformationRetrievalAssignment#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.1",
+    "handlebars": "^4.0.10",
+    "path": "^0.12.7",
+    "request": "^2.83.0"
+  }
+}
