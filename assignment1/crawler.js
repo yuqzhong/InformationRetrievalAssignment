@@ -10,63 +10,72 @@ var app = express();
 app.listen(port);
 console.log('Server is running at' + port);
 
-    var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
-    // request(seed, function (err, response, body) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else if (body) {
-    //         console.log(body);
-    //     }
-    // });
-
-//download the html
-
-var todo = new Set();
-var visited = [];
-
-var name = seed.split('/');
-name = name[name.length - 1];
-var des = fs.createWriteStream('./downloads/' + name + '.text');
+var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
 
 
-request(seed, function (err, response, body) {
-        if (err) {
-            console.log(err);
-        } else if (body) {
-            var $ = cheerio.load(body);
+var todo = [];
+var visited = new Set();
 
-            var content = '.mw-parser-output';
-            var urls = $('a',content)
-                .each(function (i, el) {
+todo.push(seed);
 
-                    if (!$(this).attr("class:contains('image')")
+var level = 1;
+
+function crawl() {
+    var url = todo.pop();
+    if (!visited.has(url)) {
+        visited.add(url);
+        //download the html
+        var name = url.split('/');
+        name = name[name.length - 1];
+        var des = fs.createWriteStream('./downloads/' + name + '.text');
+
+        request(url, function (err, response, body) {
+            if (err) {
+                console.log(err);
+            } else if (body) {
+                var $ = cheerio.load(body);
+
+                var content = '.mw-parser-output';
+                $('a',content)
+                    .each(function (i, el) {
+                        if (!$(this).attr("class:contains('image')")
                             && $(this).attr('href')) {
-                        var url = $(this).attr('href');
-                        if (url.includes('/wiki')
-                            && !url.includes('/File')
-                            && !url.includes('#')
-                            && !todo.has(url)) {
-                            todo.add(url);
+                            var toadd = $(this).attr('href');
+                            console.log(toadd);
+                            if (toadd.includes('/wiki/')
+                                && !toadd.includes('/File')
+                                && !toadd.includes('#')) {
+                                console.log(toadd);
+                                if (!toadd.includes('https')) {
+                                    todo.push('https://en.wikipedia.org' + toadd);
+                                } else {
+                                    todo.push(toadd);
+                                }
+                            }
+
                         }
 
-                    }
+                    });
+                console.log(todo);
+            }
 
-                });
-            console.log(todo);
+        })
+        .pipe(des)
+        .on('finish', function () {
+            console.log('File save successfully!');
+            if (level <= 6 && visited.size < 10) {
+                crawl();
+            }
+        })
+        .on('error', function (err) {
+            console.log(error);
+        })
+    } else {
+        if (level <= 6 && visited.size < 10) {
+            crawl();
         }
+    }
+}
 
-    })
-    .pipe(des)
-    .on('finish', function () {
-        console.log('File save successfully!');
-    })
-    .on('error', function (err) {
-        console.log(error);
-    });
-// or
-// des.on('close', function () {
-//     console.log('done');
-// })
-// .on('error', function (err) {
-//     console.log(err);
-// })
+crawl();
+
