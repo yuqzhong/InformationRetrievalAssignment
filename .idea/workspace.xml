@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d34bf632-ba3d-4054-bc48-4f7e10a6bbc2" name="Default" comment="">
+    <list default="true" id="d34bf632-ba3d-4054-bc48-4f7e10a6bbc2" name="Default" comment="craw">
       <change type="DELETED" beforePath="$PROJECT_DIR$/assignment1/downloads/Tropical_cyclone.text" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment1/crawler.js" afterPath="$PROJECT_DIR$/assignment1/crawler.js" />
@@ -22,28 +22,18 @@
       <file leaf-file-name="crawler.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignment1/crawler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-88">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="143">
+              <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Syst%C3%A8me_universitaire_de_documentation.text" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assignment1/downloads/Syst%C3%A8me_universitaire_de_documentation.text">
+      <file leaf-file-name="...And_the_Circus_Leaves_Town.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assignment1/downloads/...And_the_Circus_Leaves_Town.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="13" lean-forward="true" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tropical_cyclone.text" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assignment1/downloads/Tropical_cyclone.text">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="1891" column="751" lean-forward="true" selection-start-line="1891" selection-start-column="751" selection-end-line="1891" selection-end-column="751" />
+            <state relative-caret-position="286">
+              <caret line="19" column="80" lean-forward="false" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -53,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="22">
-              <caret line="1" column="4" lean-forward="true" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+              <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -64,7 +54,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="44">
               <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1506892981273" expanded="true" signature="0:746" ph="{&quot;name&quot;: &quot;informationretrievalassignment&quot;...}" />
+                <marker date="1506892981273" expanded="true" signature="606:744" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,7 +67,52 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-770">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1506892981301" expanded="true" signature="0:29222" ph="{&quot;name&quot;: &quot;informationretrievalassignment&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="110:29220" ph="{...}" />
+                <marker date="1506892981301" expanded="true" signature="20837:21017" ph="{&quot;version&quot;: &quot;2.1.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="21034:21202" ph="{&quot;version&quot;: &quot;0.11.10&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="21232:21422" ph="{&quot;version&quot;: &quot;1.0.7&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="21442:21612" ph="{&quot;version&quot;: &quot;2.0.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="21630:21796" ph="{&quot;version&quot;: &quot;1.4.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="21808:22024" ph="{&quot;version&quot;: &quot;6.5.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="22046:22220" ph="{&quot;version&quot;: &quot;1.2.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="22238:22404" ph="{&quot;version&quot;: &quot;2.3.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="22429:22671" ph="{&quot;version&quot;: &quot;2.3.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="22694:22870" ph="{&quot;version&quot;: &quot;1.6.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="22887:23115" ph="{&quot;version&quot;: &quot;2.83.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="23136:23332" ph="{&quot;version&quot;: &quot;0.1.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="23353:23587" ph="{&quot;version&quot;: &quot;5.1.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="23601:23823" ph="{&quot;version&quot;: &quot;0.16.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="23845:24083" ph="{&quot;version&quot;: &quot;1.13.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="24107:24347" ph="{&quot;version&quot;: &quot;1.1.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="24361:24519" ph="{&quot;version&quot;: &quot;2.0.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="24539:24709" ph="{&quot;version&quot;: &quot;0.4.4&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="24724:24886" ph="{&quot;version&quot;: &quot;1.13.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="24904:25070" ph="{&quot;version&quot;: &quot;1.3.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="25094:25334" ph="{&quot;version&quot;: &quot;1.0.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="25356:25530" ph="{&quot;version&quot;: &quot;0.0.5&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="25552:25726" ph="{&quot;version&quot;: &quot;2.3.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="25748:25922" ph="{&quot;version&quot;: &quot;0.6.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="25941:26135" ph="{&quot;version&quot;: &quot;0.14.5&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="26152:26318" ph="{&quot;version&quot;: &quot;1.6.15&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="26337:26801" ph="{&quot;version&quot;: &quot;2.8.29&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="26549:26795" ph="{...}" />
+                <marker date="1506892981301" expanded="true" signature="26573:26787" ph="{&quot;version&quot;: &quot;0.5.7&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="26831:27045" ph="{&quot;version&quot;: &quot;1.0.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="27061:27223" ph="{&quot;version&quot;: &quot;1.0.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="27237:27633" ph="{&quot;version&quot;: &quot;0.10.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="27415:27627" ph="{...}" />
+                <marker date="1506892981301" expanded="true" signature="27437:27619" ph="{&quot;version&quot;: &quot;2.0.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="27657:27835" ph="{&quot;version&quot;: &quot;1.0.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="27856:28028" ph="{&quot;version&quot;: &quot;1.0.1&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="28042:28262" ph="{&quot;version&quot;: &quot;3.1.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="28276:28434" ph="{&quot;version&quot;: &quot;1.1.2&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="28450:28614" ph="{&quot;version&quot;: &quot;1.10.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="28635:28831" ph="{&quot;version&quot;: &quot;0.1.0&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="28849:29015" ph="{&quot;version&quot;: &quot;0.0.3&quot;...}" />
+                <marker date="1506892981301" expanded="true" signature="29030:29216" ph="{&quot;version&quot;: &quot;3.10.0&quot;...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,7 +130,9 @@
     <findStrings>
       <find>&lt;a</find>
       <find>wiki/File:NOAA_Lockheed_WP-3D_Orion_%22Hurricane_Hunter%22_(N42RF)_at_SENEX_Air_Quality-Climate_Research_Study_(9119691512).jpg</find>
+      <find>category:</find>
       <find>console</find>
+      <find>push</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,24 +207,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InformationRetrievalAssignment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InformationRetrievalAssignment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="downloads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -208,7 +230,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.crawler.js">
+    <configuration default="false" name="crawler.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="crawler.js" working-dir="$PROJECT_DIR$/assignment1">
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -269,6 +294,14 @@
       <recursive>false</recursive>
       <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.crawler.js" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.crawler.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -283,7 +316,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1506878531367</updated>
-      <workItem from="1506878532665" duration="10169000" />
+      <workItem from="1506878532665" duration="21369000" />
     </task>
     <task id="LOCAL-00001" summary="update cheerio part">
       <created>1506889417564</created>
@@ -292,11 +325,18 @@
       <option name="project" value="LOCAL" />
       <updated>1506889417564</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="can crawl now. need to fix level order traversal">
+      <created>1506892058506</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1506892058506</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10169000" />
+    <option name="totallyTimeSpent" value="21369000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -314,13 +354,13 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2497349" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6219512" sideWeight="0.5021209" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.031042129" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14190687" sideWeight="0.49787912" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3991131" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -338,7 +378,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update cheerio part" />
-    <option name="LAST_COMMIT_MESSAGE" value="update cheerio part" />
+    <MESSAGE value="can crawl now. need to fix level order traversal" />
+    <option name="LAST_COMMIT_MESSAGE" value="can crawl now. need to fix level order traversal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -365,7 +406,52 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-770">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1506892981301" expanded="true" signature="0:29222" ph="{&quot;name&quot;: &quot;informationretrievalassignment&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="110:29220" ph="{...}" />
+            <marker date="1506892981301" expanded="true" signature="20837:21017" ph="{&quot;version&quot;: &quot;2.1.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="21034:21202" ph="{&quot;version&quot;: &quot;0.11.10&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="21232:21422" ph="{&quot;version&quot;: &quot;1.0.7&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="21442:21612" ph="{&quot;version&quot;: &quot;2.0.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="21630:21796" ph="{&quot;version&quot;: &quot;1.4.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="21808:22024" ph="{&quot;version&quot;: &quot;6.5.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="22046:22220" ph="{&quot;version&quot;: &quot;1.2.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="22238:22404" ph="{&quot;version&quot;: &quot;2.3.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="22429:22671" ph="{&quot;version&quot;: &quot;2.3.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="22694:22870" ph="{&quot;version&quot;: &quot;1.6.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="22887:23115" ph="{&quot;version&quot;: &quot;2.83.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="23136:23332" ph="{&quot;version&quot;: &quot;0.1.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="23353:23587" ph="{&quot;version&quot;: &quot;5.1.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="23601:23823" ph="{&quot;version&quot;: &quot;0.16.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="23845:24083" ph="{&quot;version&quot;: &quot;1.13.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="24107:24347" ph="{&quot;version&quot;: &quot;1.1.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="24361:24519" ph="{&quot;version&quot;: &quot;2.0.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="24539:24709" ph="{&quot;version&quot;: &quot;0.4.4&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="24724:24886" ph="{&quot;version&quot;: &quot;1.13.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="24904:25070" ph="{&quot;version&quot;: &quot;1.3.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="25094:25334" ph="{&quot;version&quot;: &quot;1.0.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="25356:25530" ph="{&quot;version&quot;: &quot;0.0.5&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="25552:25726" ph="{&quot;version&quot;: &quot;2.3.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="25748:25922" ph="{&quot;version&quot;: &quot;0.6.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="25941:26135" ph="{&quot;version&quot;: &quot;0.14.5&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="26152:26318" ph="{&quot;version&quot;: &quot;1.6.15&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="26337:26801" ph="{&quot;version&quot;: &quot;2.8.29&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="26549:26795" ph="{...}" />
+            <marker date="1506892981301" expanded="true" signature="26573:26787" ph="{&quot;version&quot;: &quot;0.5.7&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="26831:27045" ph="{&quot;version&quot;: &quot;1.0.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="27061:27223" ph="{&quot;version&quot;: &quot;1.0.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="27237:27633" ph="{&quot;version&quot;: &quot;0.10.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="27415:27627" ph="{...}" />
+            <marker date="1506892981301" expanded="true" signature="27437:27619" ph="{&quot;version&quot;: &quot;2.0.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="27657:27835" ph="{&quot;version&quot;: &quot;1.0.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="27856:28028" ph="{&quot;version&quot;: &quot;1.0.1&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="28042:28262" ph="{&quot;version&quot;: &quot;3.1.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="28276:28434" ph="{&quot;version&quot;: &quot;1.1.2&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="28450:28614" ph="{&quot;version&quot;: &quot;1.10.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="28635:28831" ph="{&quot;version&quot;: &quot;0.1.0&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="28849:29015" ph="{&quot;version&quot;: &quot;0.0.3&quot;...}" />
+            <marker date="1506892981301" expanded="true" signature="29030:29216" ph="{&quot;version&quot;: &quot;3.10.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -373,38 +459,113 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1506892981273" expanded="true" signature="0:746" ph="{&quot;name&quot;: &quot;informationretrievalassignment&quot;...}" />
+            <marker date="1506892981273" expanded="true" signature="606:744" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
-          <caret line="1" column="4" lean-forward="true" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Syst%C3%A8me_universitaire_de_documentation.text">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="13" lean-forward="true" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignment1/downloads/Tropical_cyclone.text">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="1891" column="751" lean-forward="true" selection-start-line="1891" selection-start-column="751" selection-end-line="1891" selection-end-column="751" />
+        <state relative-caret-position="581">
+          <caret line="2210" column="1411" lean-forward="false" selection-start-line="2210" selection-start-column="1402" selection-end-line="2210" selection-end-column="1411" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Category">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/National_Diet_Library.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2508">
+          <caret line="6" column="286" lean-forward="false" selection-start-line="6" selection-start-column="286" selection-end-line="6" selection-end-column="286" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/National_Library_of_the_Czech_Republic.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Syst%C3%A8me_universitaire_de_documentation.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="41" lean-forward="true" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Template_talk">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Biblioteca_Nacional_de_Espa%C3%B1a.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1342">
+          <caret line="62" column="5" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/Biblioth%C3%A8que_nationale_de_France.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/crawledURLs.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="true" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/crawledURLs.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="0" column="2760" lean-forward="false" selection-start-line="0" selection-start-column="2760" selection-end-line="0" selection-end-column="2760" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment1/downloads/...And_the_Circus_Leaves_Town.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="19" column="80" lean-forward="false" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignment1/crawler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-88">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="143">
+          <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
           <folding />
         </state>
       </provider>

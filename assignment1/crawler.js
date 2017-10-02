@@ -3,31 +3,41 @@ var path = require('path');
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
+// var pause = require('pause');
 
 var port = 8000;
 var app = express();
 
 app.listen(port);
-console.log('Server is running at' + port);
+console.log('Server is running at ' + port);
 
 var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
+var maxLevel = 6;
+var maxCrawlPageNum = 1000;
+var pauseTime = 1000;
 
 
 var todo = [];
 var visited = new Set();
-
-todo.push(seed);
-
-var level = 1;
+todo.push([seed]);
+for (var i = 1; i < 6; i++) {
+    todo.push([]);
+}
+var level = 0;
+console.log(todo);
 
 function crawl() {
-    var url = todo.pop();
+    var url = todo[level].pop();
+    if (url === undefined) {
+        level = level + 1;
+        url = todo[level].pop();
+    }
+    console.log(url);
     if (!visited.has(url)) {
-        visited.add(url);
         //download the html
         var name = url.split('/');
         name = name[name.length - 1];
-        var des = fs.createWriteStream('./downloads/' + name + '.text');
+        var des = fs.createWriteStream('./downloads/' + name + '.txt');
 
         request(url, function (err, response, body) {
             if (err) {
@@ -41,37 +51,46 @@ function crawl() {
                         if (!$(this).attr("class:contains('image')")
                             && $(this).attr('href')) {
                             var toadd = $(this).attr('href');
-                            console.log(toadd);
                             if (toadd.includes('/wiki/')
+                                && !toadd.includes(':')
                                 && !toadd.includes('/File')
                                 && !toadd.includes('#')) {
-                                console.log(toadd);
-                                if (!toadd.includes('https')) {
-                                    todo.push('https://en.wikipedia.org' + toadd);
+                                if (toadd.includes('https://en.wikipedia.org')) {
+                                    todo[level + 1].push(toadd);
                                 } else {
-                                    todo.push(toadd);
+                                    todo[level + 1].push('https://en.wikipedia.org' + toadd);
                                 }
                             }
 
                         }
 
                     });
-                console.log(todo);
+                console.log(todo[level].length);
+                console.log(visited);
+                console.log(visited.size);
+                console.log(level);
             }
 
         })
         .pipe(des)
         .on('finish', function () {
+            visited.add(url);
             console.log('File save successfully!');
-            if (level <= 6 && visited.size < 10) {
-                crawl();
+            if (level < maxLevel && visited.size < maxCrawlPageNum) {
+                setTimeout(crawl,pauseTime);
+            } else {
+                var outURLs = fs.createWriteStream('./crawledURLs.txt');
+                visited.forEach(function (p1, p2, p3) {
+                   outURLs.write(p1 + " ");
+                });
+                console.log('Finished XD');
             }
         })
         .on('error', function (err) {
-            console.log(error);
+            console.log(err);
         })
     } else {
-        if (level <= 6 && visited.size < 10) {
+        if (level < maxLevel && visited.size < maxCrawlPageNum) {
             crawl();
         }
     }
