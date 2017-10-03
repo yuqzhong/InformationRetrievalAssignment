@@ -1,26 +1,20 @@
-var express = require('express');
 var path = require('path');
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
 // var pause = require('pause');
 
-var port = 8000;
-var app = express();
-
-app.listen(port);
-console.log('Server is running at ' + port);
-
 var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
 var maxLevel = 6;
-var maxCrawlPageNum = 300;
-var pauseTime = 50;
+var maxCrawlPageNum = 1000;
+var pauseTime = 500;
 
 
 var todo = [];
 var error = [];
 var visited = new Set();
-var names = new Set();
+var URLs = [];
+// var names = new Set();
 
 todo.push([seed]);
 for (var i = 1; i < 6; i++) {
@@ -35,18 +29,22 @@ function crawl() {
         level = level + 1;
         url = todo[level].pop();
     }
+
     console.log(url);
-    if (!visited.has(url)) {
+    if (!visited.has(url.toLowerCase())) {
+        visited.add(url.toLowerCase());
+        URLs.push(url);
         //download the html
         var name = url.split('/');
         name = name[name.length - 1];
-        var des = fs.createWriteStream('./downloads/' + name + '.txt');
+        var des = fs.createWriteStream('./downloads/' + name.toLowerCase() + '.txt');
 
         request(url, function (err, response, body) {
+            console.log(response.statusCode);
             if (err) {
-                error.push(url + " " + err);
                 console.log(err);
-            } else if (body) {
+            } else if (response.statusCode === 200 && body) {
+                // console.log(response);
                 var $ = cheerio.load(body);
 
                 var content = '.mw-parser-output';
@@ -74,14 +72,13 @@ function crawl() {
         })
         .pipe(des);
 
-    des
-        .on('close', function () {
-            visited.add(url);
-            if (names.has(name)) {
-                console.log(url);
-                console.log("!!!!!!!!!!!!!!!!!" + name);
-            } else {
-                names.add(name);
+        des
+            .on('close', function () {
+                // if (names.has(name)) {
+                //     console.log(url);
+                //     console.log("!!!!!!!!!!!!!!!!!" + name);
+                // } else {
+                //     names.add(name);
 
                 console.log(todo[level].length);
                 console.log(visited);
@@ -94,9 +91,9 @@ function crawl() {
                 } else {
                     outputURLs();
                 }
-            }
+                // }
 
-        })
+            })
         .on('error', function (err) {
             error.push(url + " " + err);
             console.log(err);
@@ -113,12 +110,8 @@ function crawl() {
 
 function outputURLs() {
     var outURLs = fs.createWriteStream('./crawledURLs.txt');
-    visited.forEach(function (p1, p2, p3) {
+    URLs.forEach(function (p1, p2, p3) {
         outURLs.write(p1 + " ");
-    });
-    var nameOut = fs.createWriteStream('./names.txt');
-    names.forEach(function (p1, p2, p3) {
-        nameOut.write(p1 + "+");
     });
     console.log(error);
     console.log('Finished XD');
