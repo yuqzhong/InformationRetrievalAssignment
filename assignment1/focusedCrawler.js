@@ -57,7 +57,7 @@ function crawl() {
             .then(function ($) {
                 console.log(response.statusCode);
                 // if (response.statusCode === 200) {
-                    // console.log(response);
+                    console.log(response);
                     // var $ = cheerio.load(response);
                     console.log($);
                     var content = '.mw-parser-output';
