@@ -2,12 +2,11 @@ var path = require('path');
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
-// var pause = require('pause');
 
 var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
 var maxLevel = 6;
 var maxCrawlPageNum = 1000;
-var pauseTime = 500;
+var pauseTime = 1000;
 
 
 var todo = [];
@@ -17,11 +16,10 @@ var URLs = [];
 // var names = new Set();
 
 todo.push([seed]);
-for (var i = 1; i < 6; i++) {
+for (var i = 1; i < 7; i++) {
     todo.push([]);
 }
 var level = 0;
-console.log(todo);
 
 function crawl() {
     var url = todo[level].pop();
@@ -29,10 +27,10 @@ function crawl() {
         level = level + 1;
         url = todo[level].pop();
     }
-
+    var lowerURL = url.toLowerCase();
     console.log(url);
-    if (!visited.has(url.toLowerCase())) {
-        visited.add(url.toLowerCase());
+    if (!visited.has(lowerURL)) {
+        visited.add(lowerURL);
         URLs.push(url);
         //download the html
         var name = url.split('/');
@@ -46,27 +44,26 @@ function crawl() {
             } else if (response.statusCode === 200 && body) {
                 // console.log(response);
                 var $ = cheerio.load(body);
-
                 var content = '.mw-parser-output';
-                $('a',content)
-                    .each(function (i, el) {
-                        if (!$(this).attr("class:contains('image')")
-                            && $(this).attr('href')) {
-                            var toadd = $(this).attr('href');
-                            if (toadd.includes('/wiki/')
-                                && !toadd.includes(':')
-                                && !toadd.includes('/File')
-                                && !toadd.includes('#')) {
-                                if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo[level + 1].push(toadd);
-                                } else {
-                                    todo[level + 1].push('https://en.wikipedia.org' + toadd);
-                                }
-                            }
 
+                $('a',content).each(function (i, el) {
+                    if (!$(this).attr("class:contains('image')")
+                        && $(this).attr('href')) {
+                        var toadd = $(this).attr('href');
+                        if (toadd.includes('/wiki/')
+                            && !toadd.includes(':')
+                            && !toadd.includes('/File')
+                            && !toadd.includes('#')) {
+                            if (toadd.includes('https://en.wikipedia.org')) {
+                                todo[level + 1].push(toadd);
+                            } else {
+                                todo[level + 1].push('https://en.wikipedia.org' + toadd);
+                            }
                         }
 
-                    });
+                    }
+
+                });
             }
 
         })
@@ -74,12 +71,6 @@ function crawl() {
 
         des
             .on('close', function () {
-                // if (names.has(name)) {
-                //     console.log(url);
-                //     console.log("!!!!!!!!!!!!!!!!!" + name);
-                // } else {
-                //     names.add(name);
-
                 console.log(todo[level].length);
                 console.log(visited);
                 console.log(visited.size);
@@ -91,7 +82,6 @@ function crawl() {
                 } else {
                     outputURLs();
                 }
-                // }
 
             })
         .on('error', function (err) {
