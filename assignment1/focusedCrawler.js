@@ -11,7 +11,7 @@ var keyword = 'rain';
 
 var maxLevel = 6;
 var maxCrawlPageNum = 1000;
-var pauseTime = 100;
+var pauseTime = 10;
 
 
 var todo = [];
@@ -37,7 +37,7 @@ function crawl() {
     }
     var url = combo[0];
     var lowerURL = url.toLowerCase();
-    console.log(url);
+    // console.log(url);
     if (!visited.has(lowerURL)) {
 
         visited.add(lowerURL);
@@ -45,51 +45,41 @@ function crawl() {
         //download the html
         var name = url.split('/');
         name = name[name.length - 1];
-        var des = fs.createWriteStream('./focusedDownloads/' + name.toLowerCase() + '.txt');
+        // var des = fs.createWriteStream('./focusedDownloads/' + name.toLowerCase() + '.txt');
 
-        var options = {
-            uri: url,
-            transform: function (body) {
-                cheerio.load(body);
-            }
-        };
-        rp(options)
-            .then(function ($) {
-                console.log(response.statusCode);
-                // if (response.statusCode === 200) {
-                    console.log(response);
-                    // var $ = cheerio.load(response);
-                    console.log($);
-                    var content = '.mw-parser-output';
+        request(url, function (err, response, body) {
+            console.log(response.statusCode);
+            if (err) {
+                console.log(err);
+            } else if (response.statusCode === 200 && body) {
+                // console.log(response);
+                var $ = cheerio.load(body);
+                var content = '.mw-parser-output';
 
-                    $('a',content).each(function (i, el) {
-                        if (!$(this).attr("class:contains('image')")
-                            && $(this).attr('href')) {
+                $('a',content).each(function (i, el) {
+                    if (!$(this).attr("class:contains('image')")
+                        && $(this).attr('href')) {
+                        var toadd = $(this).attr('href');
+                        var anchor = $(this).attr('title');
+                        if (toadd.includes('/wiki/')
+                            && !toadd.includes(':')
+                            && !toadd.includes('/File')
+                            && !toadd.includes('#')) {
 
-                            var toadd = $(this).attr('href');
-                            var anchor = $(this).attr('title');
-                            if (toadd.includes('/wiki/')
-                                && !toadd.includes(':')
-                                && !toadd.includes('/File')
-                                && !toadd.includes('#')) {
+                            // console.log(anchor);
+                            if (toadd.includes('https://en.wikipedia.org')) {
+                                todo[level + 1].push([toadd, anchor]);
 
-                                // console.log(anchor);
-                                if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo[level + 1].push([toadd, anchor]);
-
-                                } else {
-                                    todo[level + 1].push(['https://en.wikipedia.org' + toadd, anchor]);
-                                }
-                                console.log(todo);
+                            } else {
+                                todo[level + 1].push(['https://en.wikipedia.org' + toadd, anchor]);
                             }
-
+                            // console.log(todo);
                         }
+                    }
 
-                    });
-                // }
+                });
 
-            })
-            .then(function() {
+
                 var anchor = combo[1];
 
                 if ((url.indexOf(keyword) !== -1
@@ -98,41 +88,157 @@ function crawl() {
                     || (anchor.indexOf(keyword) !== -1
                     && (anchor.indexOf(keyword) === 0
                     || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+
+                    fs.writeFileSync('./focusedDownloads/' + name.toLowerCase() + '.txt', response);
                     URLs.push(url);
-                    request(url)
-                        .pipe(des)
-                        .on('close', function () {
-                            console.log(todo[level].length);
-                            console.log(visited);
-                            console.log(visited.size);
-                            console.log(level);
-                            console.log('File save successfully!');
+                    console.log('File save successfully!');
 
-                            if (level < maxLevel && visited.size < maxCrawlPageNum) {
-                                setTimeout(crawl, pauseTime);
-                            } else {
-                                outputURLs();
-                            }
-
-                        })
-                        .on('error', function (err) {
-                            error.push(url + " " + err);
-                            console.log(err);
-                        })
-                } else {
-                    if (level < maxLevel && visited.size < maxCrawlPageNum) {
-                        setTimeout(crawl, pauseTime);
-                    } else {
-                        outputURLs();
-                    }
                 }
-            })
+
+                console.log(todo[level].length);
+                // console.log(visited);
+                console.log(visited.size);
+                console.log(URLs);
+                console.log(level);
+
+                if (level < maxLevel && URLs.length < maxCrawlPageNum) {
+                    setTimeout(crawl, pauseTime);
+                } else {
+                    outputURLs();
+                }
+
+            }
+
+        })
+            // .on('response', function (response) {
+            //     var anchor = combo[1];
+            //     if ((url.indexOf(keyword) !== -1
+            //         && (url.charAt(url.indexOf(keyword) - 1) === '_'
+            //         || url.charAt(url.indexOf(keyword) - 1) === '/'))
+            //         || (anchor.indexOf(keyword) !== -1
+            //         && (anchor.indexOf(keyword) === 0
+            //         || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+            //         fs.writeFileSync('./focusedDownloads/' + name.toLowerCase() + '.txt', response);
+            //         console.log(todo[level].length);
+            //         console.log(visited);
+            //         console.log(visited.size);
+            //         console.log(level);
+            //         console.log('File save successfully!');
+            //
+            //     }
+            //
+            //     if (level < maxLevel && visited.size < maxCrawlPageNum) {
+            //         setTimeout(crawl, pauseTime);
+            //     } else {
+            //         outputURLs();
+            //     }
+            // });
+        //     .on('close', function () {
+        //         console.log(todo[level].length);
+        //         console.log(visited);
+        //         console.log(visited.size);
+        //         console.log(level);
+        //         console.log('File save successfully!');
+        //
+        //         if (level < maxLevel && visited.size < maxCrawlPageNum) {
+        //             setTimeout(crawl, pauseTime);
+        //         } else {
+        //             outputURLs();
+        //         }
+        //
+        //     })
+        //     .on('error', function (err) {
+        //         error.push(url + " " + err);
+        //         console.log(err);
+        //     })
+        //
+        //
+        // var options = {
+        //     uri: url,
+        //     transform: function (body) {
+        //         cheerio.load(body);
+        //     }
+        // };
+        // rp(options)
+        //     .then(function ($) {
+        //         console.log(response.statusCode);
+        //         // if (response.statusCode === 200) {
+        //             console.log(response);
+        //             // var $ = cheerio.load(response);
+        //             console.log($);
+        //             var content = '.mw-parser-output';
+        //
+        //             $('a',content).each(function (i, el) {
+        //                 if (!$(this).attr("class:contains('image')")
+        //                     && $(this).attr('href')) {
+        //
+        //                     var toadd = $(this).attr('href');
+        //                     var anchor = $(this).attr('title');
+        //                     if (toadd.includes('/wiki/')
+        //                         && !toadd.includes(':')
+        //                         && !toadd.includes('/File')
+        //                         && !toadd.includes('#')) {
+        //
+        //                         // console.log(anchor);
+        //                         if (toadd.includes('https://en.wikipedia.org')) {
+        //                             todo[level + 1].push([toadd, anchor]);
+        //
+        //                         } else {
+        //                             todo[level + 1].push(['https://en.wikipedia.org' + toadd, anchor]);
+        //                         }
+        //                         console.log(todo);
+        //                     }
+        //
+        //                 }
+        //
+        //             });
+        //         // }
+        //
+        //     })
+        //     .then(function() {
+        //         var anchor = combo[1];
+        //
+        //         if ((url.indexOf(keyword) !== -1
+        //             && (url.charAt(url.indexOf(keyword) - 1) === '_'
+        //             || url.charAt(url.indexOf(keyword) - 1) === '/'))
+        //             || (anchor.indexOf(keyword) !== -1
+        //             && (anchor.indexOf(keyword) === 0
+        //             || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+        //             URLs.push(url);
+        //             request(url)
+        //                 .pipe(des)
+        //                 .on('close', function () {
+        //                     console.log(todo[level].length);
+        //                     console.log(visited);
+        //                     console.log(visited.size);
+        //                     console.log(level);
+        //                     console.log('File save successfully!');
+        //
+        //                     if (level < maxLevel && visited.size < maxCrawlPageNum) {
+        //                         setTimeout(crawl, pauseTime);
+        //                     } else {
+        //                         outputURLs();
+        //                     }
+        //
+        //                 })
+        //                 .on('error', function (err) {
+        //                     error.push(url + " " + err);
+        //                     console.log(err);
+        //                 })
+        //         } else {
+        //             if (level < maxLevel && visited.size < maxCrawlPageNum) {
+        //                 setTimeout(crawl, pauseTime);
+        //             } else {
+        //                 outputURLs();
+        //             }
+        //         }
+        //     })
             // .catch('error', function (err) {
             //     console.log(err);
             // });
 
     } else {
-        if (level < maxLevel && visited.size < maxCrawlPageNum) {
+        if (level < maxLevel && URLs.length < maxCrawlPageNum) {
             crawl();
         } else {
             outputURLs();
