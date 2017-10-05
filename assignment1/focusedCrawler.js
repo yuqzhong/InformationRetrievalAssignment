@@ -9,7 +9,7 @@ var keyword = 'rain';
 
 var maxLevel = 6;
 var maxCrawlPageNum = 1000;
-var pauseTime = 10;
+var pauseTime = 0;
 
 
 var todo = [];
@@ -17,24 +17,18 @@ var error = [];
 var visited = new Set();
 var URLs = [];
 
-todo.push([[seed,'']]);
-for (var i = 1; i < 7; i++) {
-    todo.push([]);
-}
-var level = 0;
+todo.push([seed,'', 1]);
+// var level = 0;
 
 // var re = new RegExp('_' + keyword.charAt(0) + '|' + keyword.charAt(0).toUpperCase()  + keyword.substring(1));
 
 function crawl() {
-    var combo = todo[level].pop();
+    var combo = todo.pop();
     console.log(combo);
-    if (combo === undefined) {
-        level = level + 1;
-        combo = todo[level].pop();
-    }
     var url = combo[0];
+    var level = combo[2];
     var lowerURL = url.toLowerCase();
-    if (!visited.has(lowerURL)) {
+    if (level <= 6 && !visited.has(lowerURL)) {
         visited.add(lowerURL);
 
         //download the html
@@ -60,17 +54,34 @@ function crawl() {
                             && !toadd.includes('/File')
                             && !toadd.includes('#')) {
 
-                            if (toadd.includes('https://en.wikipedia.org')) {
-                                todo[level + 1].push([toadd, anchor]);
+                            if ((toadd.indexOf(keyword) !== -1
+                                && (toadd.charAt(toadd.indexOf(keyword) - 1) === '_'
+                                || toadd.charAt(toadd.indexOf(keyword) - 1) === '/'))
+                                || (anchor.indexOf(keyword) !== -1
+                                && (anchor.indexOf(keyword) === 0
+                                || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+
+                                if (toadd.includes('https://en.wikipedia.org')) {
+                                    todo.unshift([toadd, anchor, level + 1]);
+
+                                } else {
+                                    todo.unshift(['https://en.wikipedia.org' + toadd, anchor, level + 1]);
+                                }
 
                             } else {
-                                todo[level + 1].push(['https://en.wikipedia.org' + toadd, anchor]);
+                                if (toadd.includes('https://en.wikipedia.org')) {
+                                    todo.push([toadd, anchor, level + 1]);
+
+                                } else {
+                                    todo.push(['https://en.wikipedia.org' + toadd, anchor, level + 1]);
+                                }
                             }
                         }
                     }
 
                 });
 
+                // console.log(todo);
                 var anchor = combo[1];
 
                 if ((url.indexOf(keyword) !== -1
@@ -80,7 +91,7 @@ function crawl() {
                     && (anchor.indexOf(keyword) === 0
                     || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
 
-                    fs.writeFileSync('./focusedDownloads/' + name.toLowerCase() + '.txt', body);
+                    fs.writeFile('./focusedDownloads/' + name.toLowerCase() + '.txt', body);
                     URLs.push(url);
                     console.log('File save successfully!');
 
@@ -91,7 +102,7 @@ function crawl() {
                 console.log(URLs);
                 console.log(level);
 
-                if (level < maxLevel && URLs.length < maxCrawlPageNum) {
+                if (todo.length > 0 && URLs.length < maxCrawlPageNum) {
                     setTimeout(crawl, pauseTime);
                 } else {
                     outputURLs();
@@ -102,7 +113,7 @@ function crawl() {
         })
 
     } else {
-        if (level < maxLevel && URLs.length < maxCrawlPageNum) {
+        if (todo.length > 0 && URLs.length < maxCrawlPageNum) {
             crawl();
         } else {
             outputURLs();
