@@ -57,9 +57,9 @@ function crawl() {
                             if ((toadd.indexOf(keyword) !== -1
                                 && (toadd.charAt(toadd.indexOf(keyword) - 1) === '_'
                                     || toadd.charAt(toadd.indexOf(keyword) - 1) === '/'))
-                                || (anchor.indexOf(keyword) !== -1
+                                || (anchor !== undefined && (anchor.indexOf(keyword) !== -1
                                     && (anchor.indexOf(keyword) === 0
-                                        || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+                                        || anchor.charAt(anchor.indexOf(keyword) - 1) === ' ')))) {
 
                                 if (toadd.includes('https://en.wikipedia.org')) {
                                     todo.unshift([toadd, anchor, nextLevel]);
