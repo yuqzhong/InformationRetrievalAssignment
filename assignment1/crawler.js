@@ -71,11 +71,11 @@ function crawl() {
 
         des
             .on('close', function () {
-                console.log(todo[level].length);
-                console.log(visited);
-                console.log(visited.size);
-                console.log(level);
-                console.log('File save successfully!');
+                // console.log(todo[level].length);
+                // console.log(visited);
+                // console.log(visited.size);
+                // console.log(level);
+                // console.log('File save successfully!');
 
                 if (level < maxLevel && visited.size < maxCrawlPageNum) {
                     setTimeout(crawl, pauseTime);
