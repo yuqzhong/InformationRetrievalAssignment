@@ -23,14 +23,14 @@ todo.push([seed,'', 1]);
 // var re = new RegExp('_' + keyword.charAt(0) + '|' + keyword.charAt(0).toUpperCase()  + keyword.substring(1));
 
 function crawl() {
-    var combo = todo.pop();
+    var combo = todo.shift();
     console.log(combo);
     var url = combo[0];
     var level = combo[2];
     var lowerURL = url.toLowerCase();
-    if (level <= 6 && !visited.has(lowerURL)) {
+    if (level <= maxLevel && !visited.has(lowerURL)) {
         visited.add(lowerURL);
-
+        var nextLevel = level + 1;
         //download the html
         var name = url.split('/');
         name = name[name.length - 1];
@@ -56,24 +56,24 @@ function crawl() {
 
                             if ((toadd.indexOf(keyword) !== -1
                                 && (toadd.charAt(toadd.indexOf(keyword) - 1) === '_'
-                                || toadd.charAt(toadd.indexOf(keyword) - 1) === '/'))
+                                    || toadd.charAt(toadd.indexOf(keyword) - 1) === '/'))
                                 || (anchor.indexOf(keyword) !== -1
-                                && (anchor.indexOf(keyword) === 0
-                                || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
+                                    && (anchor.indexOf(keyword) === 0
+                                        || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
 
                                 if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo.unshift([toadd, anchor, level + 1]);
+                                    todo.unshift([toadd, anchor, nextLevel]);
 
                                 } else {
-                                    todo.unshift(['https://en.wikipedia.org' + toadd, anchor, level + 1]);
+                                    todo.unshift(['https://en.wikipedia.org' + toadd, anchor, nextLevel]);
                                 }
 
                             } else {
                                 if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo.push([toadd, anchor, level + 1]);
+                                    todo.push([toadd, anchor, nextLevel]);
 
                                 } else {
-                                    todo.push(['https://en.wikipedia.org' + toadd, anchor, level + 1]);
+                                    todo.push(['https://en.wikipedia.org' + toadd, anchor, nextLevel]);
                                 }
                             }
                         }
@@ -96,7 +96,7 @@ function crawl() {
                     console.log('File save successfully!');
 
                 }
-                console.log(todo[level].length);
+                console.log(todo);
                 // console.log(visited);
                 console.log(visited.size);
                 console.log(URLs);
