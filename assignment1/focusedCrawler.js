@@ -32,6 +32,7 @@ function crawl() {
         level++;
         if (level === maxLevel) {
             outputURLs();
+            return;
         }
         combo = todo[level].shift();
     }
@@ -72,6 +73,7 @@ function crawl() {
                                 && !toadd.includes(':')
                                 && !toadd.includes('/File')
                                 && !toadd.includes('#')
+                                && !toadd.includes('=')
                                 && containsKeyword(toadd, anchor)) {
                                 if (level < maxLevel - 1) {
                                     var urlToAdd = toadd.includes('https://en.wikipedia.org') ? toadd : 'https://en.wikipedia.org' + toadd;
