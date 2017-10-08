@@ -6,119 +6,111 @@ var fs = require('fs');
 // Set the seed and keyword here
 var seed = 'https://en.wikipedia.org/wiki/Tropical_cyclone';
 var keyword = 'rain';
-
+//
 var maxLevel = 6;
 var maxCrawlPageNum = 1000;
-var pauseTime = 0;
+var pauseTime = 10;
 
 
 var todo = [];
+var ptodo = [];
 var error = [];
 var visited = new Set();
 var URLs = [];
+var counter = 0;
 
-todo.push([seed,'', 1]);
+var invalidChar = ['\\','/','*', '?', ':', '"', '<', '>', '|'];
+
+todo.push([seed, '', 1]);
+visited.add(seed.toLowerCase());
 // var level = 0;
 
-// var re = new RegExp('_' + keyword.charAt(0) + '|' + keyword.charAt(0).toUpperCase()  + keyword.substring(1));
+function containsKeyword(url, anchor) {
+    if (url === undefined)
+        return false;
+    url = url.toLowerCase();
+    if (anchor !== undefined)
+        anchor = anchor.toLowerCase();
+    return (url.indexOf(keyword) !== -1
+                && (url.charAt(url.indexOf(keyword) - 1) === '_'
+                    || url.charAt(url.indexOf(keyword) - 1) === '/'))
+            || (anchor !== undefined
+                && anchor.indexOf(keyword) !== -1
+                    && (anchor.indexOf(keyword) === 0
+                        || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '));
+}
 
 function crawl() {
-    var combo = todo.shift();
+    counter = counter + 1;
+    var combo = undefined;
+    if (ptodo.length !== 0)
+        combo = ptodo.shift();
+    else
+        combo = todo.shift();
+
     console.log(combo);
     var url = combo[0];
     var level = combo[2];
-    var lowerURL = url.toLowerCase();
-    if (level <= maxLevel && !visited.has(lowerURL)) {
-        visited.add(lowerURL);
-        var nextLevel = level + 1;
-        //download the html
-        var name = url.split('/');
-        name = name[name.length - 1];
+    var nextLevel = level + 1;
+    //download the html
+    var name = url.split('/');
+    name = name[name.length - 1];
 
-        request(url, function (err, response, body) {
-            // console.log(response.statusCode);
-            if (err) {
-                console.log(err);
-            } else if (response && response.statusCode === 200 && body) {
-                // console.log(response);
-                var $ = cheerio.load(body);
-                var content = '.mw-parser-output';
+    request(url, function (err, response, body) {
+        if (err) {
+            console.log(err);
+        } else if (response && response.statusCode === 200 && body) {
+            var $ = cheerio.load(body);
+            var content = '.mw-parser-output';
 
-                $('a',content).each(function (i, el) {
-                    if (!$(this).attr("class:contains('image')")
-                        && $(this).attr('href')) {
-                        var toadd = $(this).attr('href');
-                        var anchor = $(this).attr('title');
-                        if (toadd.includes('/wiki/')
-                            && !toadd.includes(':')
-                            && !toadd.includes('/File')
-                            && !toadd.includes('#')) {
+            var flag = containsKeyword(url, combo[1]);
+            $('a', content).each(function (i, el) {
+                if (!$(this).attr("class:contains('image')")
+                    && $(this).attr('href')) {
+                    var toadd = $(this).attr('href');
+                    var anchor = $(this).attr('title');
+                    if (toadd.includes('/wiki/')
+                        && !toadd.includes(':')
+                        && !toadd.includes('/File')
+                        && !toadd.includes('#')) {
 
-                            if ((toadd.indexOf(keyword) !== -1
-                                && (toadd.charAt(toadd.indexOf(keyword) - 1) === '_'
-                                    || toadd.charAt(toadd.indexOf(keyword) - 1) === '/'))
-                                || (anchor !== undefined && (anchor.indexOf(keyword) !== -1
-                                    && (anchor.indexOf(keyword) === 0
-                                        || anchor.charAt(anchor.indexOf(keyword) - 1) === ' ')))) {
-
-                                if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo.unshift([toadd, anchor, nextLevel]);
-
-                                } else {
-                                    todo.unshift(['https://en.wikipedia.org' + toadd, anchor, nextLevel]);
-                                }
-
+                        var lowerURL = toadd.toLowerCase();
+                        if (nextLevel <= maxLevel && !visited.has(lowerURL)) {
+                            visited.add(lowerURL);
+                            var urlToAdd = toadd.includes('https://en.wikipedia.org') ? toadd : 'https://en.wikipedia.org' + toadd;
+                            if (containsKeyword(toadd, anchor)) {
+                                ptodo.unshift([urlToAdd, anchor, nextLevel]);
+                            } else if (flag) {
+                                ptodo.push([urlToAdd, anchor, nextLevel]);
                             } else {
-                                if (toadd.includes('https://en.wikipedia.org')) {
-                                    todo.push([toadd, anchor, nextLevel]);
-
-                                } else {
-                                    todo.push(['https://en.wikipedia.org' + toadd, anchor, nextLevel]);
-                                }
+                                todo.push([urlToAdd, anchor, nextLevel]);
                             }
                         }
                     }
-
+                }
+            });
+            var anchor = combo[1];
+            if (containsKeyword(url, anchor)) {
+                //language=JSRegexp
+                name = name.replace(/[\\*?:"<>|]/g, function (x) {
+                    return x.charCodeAt(0);
                 });
-
-                // console.log(todo);
-                var anchor = combo[1];
-
-                if ((url.indexOf(keyword) !== -1
-                    && (url.charAt(url.indexOf(keyword) - 1) === '_'
-                    || url.charAt(url.indexOf(keyword) - 1) === '/'))
-                    || (anchor.indexOf(keyword) !== -1
-                    && (anchor.indexOf(keyword) === 0
-                    || anchor.charAt(anchor.indexOf(keyword) - 1) === ' '))) {
-
-                    fs.writeFile('./focusedDownloads/' + name.toLowerCase() + '.txt', body);
-                    URLs.push(url);
-                    console.log('File save successfully!');
-
-                }
-                console.log(todo);
-                // console.log(visited);
-                console.log(visited.size);
-                console.log(URLs);
-                console.log(level);
-
-                if (todo.length > 0 && URLs.length < maxCrawlPageNum) {
-                    setTimeout(crawl, pauseTime);
-                } else {
-                    outputURLs();
-                }
-
+                console.log(name);
+                filename = './focusedDownloads/' + name.toLowerCase() + '.txt';
+                fs.writeFileSync(filename, body);
+                URLs.push(url);
             }
+        }
 
-        })
-
-    } else {
-        if (todo.length > 0 && URLs.length < maxCrawlPageNum) {
-            crawl();
+        if ((todo.length > 0 || ptodo.length > 0) && URLs.length < maxCrawlPageNum) {
+            console.log(URLs.length);
+            console.log(ptodo.length);
+            console.log(todo.length);
+            setTimeout(crawl, pauseTime);
         } else {
             outputURLs();
         }
-    }
+    });
 }
 
 function outputURLs() {
@@ -131,4 +123,3 @@ function outputURLs() {
 }
 
 crawl();
-
