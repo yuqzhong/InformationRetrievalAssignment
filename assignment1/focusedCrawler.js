@@ -30,6 +30,9 @@ function crawl() {
     var combo = todo[level].shift();
     if (combo === undefined) {
         level++;
+        if (level === maxLevel) {
+            outputURLs();
+        }
         combo = todo[level].shift();
     }
 
@@ -68,7 +71,8 @@ function crawl() {
                             if (toadd.includes('/wiki/')
                                 && !toadd.includes(':')
                                 && !toadd.includes('/File')
-                                && !toadd.includes('#')) {
+                                && !toadd.includes('#')
+                                && containsKeyword(toadd, anchor)) {
                                 if (level < maxLevel - 1) {
                                     var urlToAdd = toadd.includes('https://en.wikipedia.org') ? toadd : 'https://en.wikipedia.org' + toadd;
                                     todo[level + 1].push([urlToAdd, anchor]);
@@ -82,7 +86,7 @@ function crawl() {
                             return x.charCodeAt(0);
                         });
                         console.log(name);
-                        filename = './focusedDownloads/' + name.toLowerCase() + '.txt';
+                        var filename = './focusedDownloads/' + name.toLowerCase() + '.txt';
                         fs.writeFileSync(filename, body);
                         URLs.push(thisUrl);
                     }
