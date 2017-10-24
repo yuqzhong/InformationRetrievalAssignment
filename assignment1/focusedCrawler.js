@@ -13,39 +13,29 @@ var pauseTime = 10;
 
 
 var todo = [];
+var ptodo = [];
 var error = [];
 var visited = new Set();
 var URLs = [];
-var level = 0;
 
+todo.push([seed, '', 1]);
 
-todo.push([[seed, '']]);
-// var level = 0;
-
-for (var i = 2; i <= maxLevel; i++) {
-    todo.push([]);
-}
 
 function crawl() {
-    var combo = todo[level].shift();
-    if (combo === undefined) {
-        level++;
-        if (level === maxLevel) {
-            outputURLs();
-            return;
-        }
-        combo = todo[level].shift();
-    }
+    var combo = undefined;
+    if (ptodo.length !== 0)
+        combo = ptodo.shift();
+    else
+        combo = todo.shift();
 
     console.log(combo);
     var url = combo[0];
-    //download the html
-    var name = url.split('/');
-    name = name[name.length - 1];
+    var level = combo[2];
+    var nextLevel = level + 1;
     var lowerURL = url.toLowerCase();
-    if (!visited.has(lowerURL)) {
-        // visited.add(lowerURL);
+    //download the html
 
+    if (!visited.has(lowerURL)) {
         request(url, function (err, response, body) {
             if (err) {
                 console.log(err);
@@ -64,6 +54,7 @@ function crawl() {
 
                     var content = '.mw-parser-output';
 
+                    var flag = containsKeyword(thisUrl.toLowerCase(), combo[1]);
                     $('a', content).each(function (i, el) {
                         if (!$(this).attr("class:contains('image')")
                             && $(this).attr('href')) {
@@ -72,18 +63,28 @@ function crawl() {
                             if (toadd.includes('/wiki/')
                                 && !toadd.includes(':')
                                 && !toadd.includes('/File')
-                                && !toadd.includes('#')
-                                && !toadd.includes('=')
-                                && containsKeyword(toadd, anchor)) {
-                                if (level < maxLevel - 1) {
+                                && !toadd.includes('#')) {
+
+                                if (nextLevel <= maxLevel) {
                                     var urlToAdd = toadd.includes('https://en.wikipedia.org') ? toadd : 'https://en.wikipedia.org' + toadd;
-                                    todo[level + 1].push([urlToAdd, anchor]);
+                                    if (containsKeyword(toadd, anchor)) {
+                                        ptodo.unshift([urlToAdd, anchor, nextLevel]);
+                                    } else if (flag) {
+                                        ptodo.push([urlToAdd, anchor, nextLevel]);
+                                    } else {
+                                        todo.push([urlToAdd, anchor, nextLevel]);
+                                    }
                                 }
                             }
                         }
                     });
+
                     var anchor = combo[1];
-                    if (containsKeyword(url, anchor)) {
+                    if (containsKeyword(thisUrl, anchor)) {
+                        //language=JSRegexp
+                        var name = thisUrl.split('/');
+                        name = name[name.length - 1];
+
                         name = name.replace(/[\\*?:"<>|]/g, function (x) {
                             return x.charCodeAt(0);
                         });
@@ -92,26 +93,25 @@ function crawl() {
                         fs.writeFileSync(filename, body);
                         URLs.push(thisUrl);
                     }
-
                     afterFunction();
-
                 } else {
                     afterFunction();
                 }
             }
         });
+    }
 
-    } else {
-        if (level < maxLevel && URLs.length < maxCrawlPageNum) {
+    else {
+        if ((todo.length > 0 || ptodo.length > 0) && URLs.length < maxCrawlPageNum) {
             console.log(URLs.length);
-            console.log(visited.size);
-            console.log(todo[level].length);
-            console.log(level);
+            console.log(ptodo.length);
+            console.log(todo.length);
             crawl();
         } else {
             outputURLs();
         }
     }
+
 }
 
 function containsKeyword(url, anchor) {
@@ -130,11 +130,10 @@ function containsKeyword(url, anchor) {
 }
 
 function afterFunction() {
-    if (level < maxLevel && URLs.length < maxCrawlPageNum) {
+    if ((todo.length > 0 || ptodo.length > 0) && URLs.length < maxCrawlPageNum) {
         console.log(URLs.length);
-        console.log(visited.size);
-        console.log(todo[level].length);
-        console.log(level);
+        console.log(ptodo.length);
+        console.log(todo.length);
         setTimeout(crawl, pauseTime);
     } else {
         outputURLs();

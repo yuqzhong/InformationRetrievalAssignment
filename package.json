@@ -23,6 +23,7 @@
     "path": "^0.12.7",
     "porter-stemmer": "^0.9.1",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sync-request": "^4.1.0"
   }
 }
