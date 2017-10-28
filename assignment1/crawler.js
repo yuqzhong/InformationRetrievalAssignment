@@ -21,6 +21,7 @@ for (var i = 1; i < 7; i++) {
 }
 var level = 0;
 
+
 function crawl() {
     var url = todo[level].pop();
     if (url === undefined) {
