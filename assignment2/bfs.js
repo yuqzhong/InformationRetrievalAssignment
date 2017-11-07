@@ -30,10 +30,10 @@ var level = 0;
 
 
 function crawl() {
-    var combo = todo[level].pop();
+    var combo = todo[level].shift();
     if (combo === undefined) {
         level = level + 1;
-        combo = todo[level].pop();
+        combo = todo[level].shift();
     }
     var url = combo[0];
     var parentIndex = combo[1];
@@ -54,11 +54,6 @@ function crawl() {
             }
 
             console.log(thisUrl);
-            
-            
-            // TODO: put the true url to inlink and outlink
-            // TODO: construct node in names and nameMap and map
-            
 
             if (!visited.has(thisUrl.toLowerCase())) {
                 visited.add(thisUrl.toLowerCase());

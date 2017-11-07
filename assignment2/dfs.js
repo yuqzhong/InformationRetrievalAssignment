@@ -26,7 +26,7 @@ todo.push([seed, 0, 0]);
 
 
 function crawl() {
-    var combo = todo.shift();
+    var combo = todo.pop();
     console.log(combo);
 
     var url = combo[0];
@@ -47,12 +47,9 @@ function crawl() {
             }
             console.log(thisUrl);
 
-
-
             if (!visited.has(thisUrl.toLowerCase())) {
 
                 visited.add(thisUrl.toLowerCase());
-                visited.add(url.toLowerCase());
 
                 var name = thisUrl.split('/');
                 name = name[name.length - 1];
@@ -76,7 +73,7 @@ function crawl() {
 
                             if (nextLevel <= maxLevel) {
                                 var urlToAdd = toadd.includes('https://en.wikipedia.org') ? toadd : 'https://en.wikipedia.org' + toadd;
-                                todo.unshift([urlToAdd, map.get(thisUrl.toLowerCase()), nextLevel]);
+                                todo.push([urlToAdd, map.get(thisUrl.toLowerCase()), nextLevel]);
 
                             }
                         }
@@ -119,32 +116,32 @@ function outputURLs() {
     URLs.forEach(function (p1, p2, p3) {
         outURLs.write(p1 + "\r\n");
     });
-
-    var outIndex = fs.createWriteStream('./dfsIndex.txt');
-    map.forEach(function (value, key, map) {
-        var arr = key.split('/');
-        var name = arr[arr.length - 1];
-        outIndex.write(key + " " + name + "\r\n");
-
-    });
-
-    var dfsInLink = fs.createWriteStream('./dfsInLink.txt');
-    for (var i = 0; i < inLink.length; i++) {
-        dfsInLink.write("| " + names[i] + " ");
-        inLink[i].forEach (function (value, p1, p2) {
-            dfsInLink.write(value + " ");
-        });
-        dfsInLink.write('\r\n');
-    }
-
-    var dfsOutLink = fs.createWriteStream('./dfsOutLink.txt');
-    for (var i = 0; i < outLink.length; i++) {
-        dfsOutLink.write("| " + names[i] + " ");
-        outLink[i].forEach (function (value, p1, p2) {
-            dfsOutLink.write(value + " ");
-        });
-        dfsOutLink.write('\r\n');
-    }
+    //
+    // var outIndex = fs.createWriteStream('./dfsIndex.txt');
+    // map.forEach(function (value, key, map) {
+    //     var arr = key.split('/');
+    //     var name = arr[arr.length - 1];
+    //     outIndex.write(key + " " + name + "\r\n");
+    //
+    // });
+    //
+    // var dfsInLink = fs.createWriteStream('./dfsInLink.txt');
+    // for (var i = 0; i < inLink.length; i++) {
+    //     dfsInLink.write("| " + names[i] + " ");
+    //     inLink[i].forEach (function (value, p1, p2) {
+    //         dfsInLink.write(value + " ");
+    //     });
+    //     dfsInLink.write('\r\n');
+    // }
+    //
+    // var dfsOutLink = fs.createWriteStream('./dfsOutLink.txt');
+    // for (var i = 0; i < outLink.length; i++) {
+    //     dfsOutLink.write("| " + names[i] + " ");
+    //     outLink[i].forEach (function (value, p1, p2) {
+    //         dfsOutLink.write(value + " ");
+    //     });
+    //     dfsOutLink.write('\r\n');
+    // }
     
     console.log('Finished XD');
 }
