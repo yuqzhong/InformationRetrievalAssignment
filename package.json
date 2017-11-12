@@ -21,8 +21,6 @@
     "express": "^4.16.1",
     "handlebars": "^4.0.10",
     "path": "^0.12.7",
-    "porter-stemmer": "^0.9.1",
-    "request": "^2.83.0",
-    "sync-request": "^4.1.0"
+    "request": "^2.83.0"
   }
 }
