@@ -2,6 +2,7 @@ var path = require('path');
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
+var readline = require('readline');
 
 
 var outDir = './task1/';
@@ -15,18 +16,61 @@ var htmls = htmlString.split(" ");
 htmls.pop(); // remove last empty element
 
 
-parse(htmls);
+setUpChoice(htmls);
 
-function parse(htmls) {
-    var choice = setUpChoice();
 
+// Read the option of case-folding and punctionation handling
+function setUpChoice(htmls) {
+    var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+
+    var res = [];
+
+    rl.question('Do you want use the default choice of case-folding, punctuation handling and remove characters from other languages (default are all yes) ? (Y / N) \n', function(answer) {
+        if (answer === 'Y') {
+            res.push('Y');
+            res.push('Y');
+            res.push('Y');
+            rl.close();
+            parse(htmls, res);
+        } else {
+            rl.question('Do you want to perform case-folding ? (Y / N) \n', function(answer) {
+                res.push(answer);
+                rl.close();
+                rl = readline.createInterface({
+                    input: process.stdin,
+                    output: process.stdout
+                });
+                rl.question('Do you want to perform punctuation handling? (Y / N) \n', function(answer) {
+                    res.push(answer);
+                    rl.close();
+                    rl = readline.createInterface({
+                        input: process.stdin,
+                        output: process.stdout
+                    });
+                    rl.question('Do you want to remove other language characters other than English? (Y / N) \n', function(answer) {
+                        res.push(answer);
+                        rl.close();
+                        parse(htmls, res);
+                    })
+                });
+            });
+        }
+    });
+
+}
+
+function parse(htmls, choice) {
     var names = [];
     for (var i = 0; i < htmls.length; i++) {
-    // i = 1;
         var tempArr = htmls[i].split('/');
         var name = tempArr[tempArr.length - 1];
-        // var name = 'test';
+
         console.log(i + " " + name);
+
         var rawHtml = fs.readFileSync(rawFileDir + name + '.txt', 'utf-8', function (err, dat) {
             return data;
         });
@@ -65,6 +109,9 @@ function parse(htmls) {
         if (choice[1] === 'Y') {
             text = removePunctuation(text);
         }
+        if (choice[2] === 'Y') {
+            text = removeNounEnglish(text);
+        }
         fs.writeFileSync(outFilename, text);
     }
     outputNameMap(names);
@@ -77,43 +124,9 @@ function outputNameMap(names) {
     for (var i = 0; i < names.length; i++) {
         fs.appendFileSync(outFileName, (i + 1) + " " + names[i] + "\r\n");
     }
+    console.log('Finished!');
 }
 
-// Read the option of case-folding and punctionation handling
-function setUpChoice() {
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-
-    var res = [];
-
-    rl.question('Do you want use the default choice of case-folding and punctuation handling (both yes) ? (Y / N) \n', function(answer) {
-        if (answer === 'Y') {
-            res.push('Y');
-            res.push('Y');
-            rl.close();
-            return res;
-        } else {
-            rl.question('Do you want to perform case-folding ? (Y / N) \n', function(answer) {
-                res.push(answer);
-                rl.close();
-                rl = readline.createInterface({
-                    input: process.stdin,
-                    output: process.stdout
-                });
-                rl.question('Do you want to perform punctuation handling? (Y / N) \n', function(answer) {
-                    res.push(answer);
-                    rl.close();
-
-                    return res;
-                });
-            });
-        }
-    });
-
-}
 
 function caseFolding(text) {
     return text.toLowerCase();
@@ -121,7 +134,7 @@ function caseFolding(text) {
 
 function removePunctuation(text) {
     text = text.replace(/\(\/.*?\/\)/g, "") // remove soundmark
-        .replace(/[^\w\s\/.\-°']|_/g, " ") // remove punctuation except / , . ° ' -
+        .replace(/[[\]()!@#$%^&\-+=|\\:;<>?_"*{}～]/g, " ") // remove punctuation except / , . ° ' -
         .replace(/\./g, function (match, offset, string) {
             if (offset === 0
                 || string[offset - 1].match(/[^0-9a-zA-Z]/) !== null
@@ -188,5 +201,11 @@ function removePunctuation(text) {
             }
         })
         .replace(/\s+/g, " ");
+    return text;
+}
+
+function removeNounEnglish(text) {
+    text = text.replace(/[^\w\s/,.\-°']|_/g, "")
+                .replace(/\s+/g, " ");
     return text;
 }
