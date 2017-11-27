@@ -35,13 +35,13 @@ public class HW4 {
     private ArrayList<File> queue = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-//        System.out
-//                .println("Enter the FULL path where the index will be created: (e.g. /Usr/index or c:\\temp\\index)");
+        System.out
+                .println("Enter the FULL path where the index will be created: (e.g. /Usr/index or c:\\temp\\index)");
 
         String indexLocation = null;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        String s = br.readLine();
-        String s = "C:\\Master\\NEU\\4. Information Retrieval\\InformationRetrievalAssignment\\assignment4\\out";
+        String s = br.readLine();
+//        String s = "C:\\Master\\NEU\\4. Information Retrieval\\InformationRetrievalAssignment\\assignment4\\out";
         HW4 indexer = null;
         try {
             indexLocation = s;
@@ -54,17 +54,17 @@ public class HW4 {
         // ===================================================
         // read input from user until he enters q for quit
         // ===================================================
-//        while (!s.equalsIgnoreCase("q")) {
+        while (!s.equalsIgnoreCase("q")) {
             try {
-//                System.out
-//                        .println("Enter the FULL path to add into the index (q=quit): (e.g. /home/mydir/docs or c:\\Users\\mydir\\docs)");
-//                System.out
-//                        .println("[Acceptable file types: .xml, .html, .html, .txt]");
-//                s = br.readLine();
-                s = "C:\\Master\\NEU\\4. Information Retrieval\\InformationRetrievalAssignment\\assignment4\\src\\task1";
-//                if (s.equalsIgnoreCase("q")) {
-//                    break;
-//                }
+                System.out
+                        .println("Enter the FULL path to add into the index (q=quit): (e.g. /home/mydir/docs or c:\\Users\\mydir\\docs)");
+                System.out
+                        .println("[Acceptable file types: .xml, .html, .html, .txt]");
+                s = br.readLine();
+//                s = "C:\\Master\\NEU\\4. Information Retrieval\\InformationRetrievalAssignment\\assignment4\\src\\task1";
+                if (s.equalsIgnoreCase("q")) {
+                    break;
+                }
 
                 // try to add file into the index
                 indexer.indexFileOrDirectory(s);
@@ -72,7 +72,7 @@ public class HW4 {
                 System.out.println("Error indexing " + s + " : "
                         + e.getMessage());
             }
-//        }
+        }
 
         // ===================================================
         // after adding, we always have to call the
