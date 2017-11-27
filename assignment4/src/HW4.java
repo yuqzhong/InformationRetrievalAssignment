@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
@@ -52,16 +54,17 @@ public class HW4 {
         // ===================================================
         // read input from user until he enters q for quit
         // ===================================================
-        while (!s.equalsIgnoreCase("q")) {
+//        while (!s.equalsIgnoreCase("q")) {
             try {
-                System.out
-                        .println("Enter the FULL path to add into the index (q=quit): (e.g. /home/mydir/docs or c:\\Users\\mydir\\docs)");
-                System.out
-                        .println("[Acceptable file types: .xml, .html, .html, .txt]");
-                s = br.readLine();
-                if (s.equalsIgnoreCase("q")) {
-                    break;
-                }
+//                System.out
+//                        .println("Enter the FULL path to add into the index (q=quit): (e.g. /home/mydir/docs or c:\\Users\\mydir\\docs)");
+//                System.out
+//                        .println("[Acceptable file types: .xml, .html, .html, .txt]");
+//                s = br.readLine();
+                s = "C:\\Master\\NEU\\4. Information Retrieval\\InformationRetrievalAssignment\\assignment4\\src\\task1";
+//                if (s.equalsIgnoreCase("q")) {
+//                    break;
+//                }
 
                 // try to add file into the index
                 indexer.indexFileOrDirectory(s);
@@ -69,7 +72,7 @@ public class HW4 {
                 System.out.println("Error indexing " + s + " : "
                         + e.getMessage());
             }
-        }
+//        }
 
         // ===================================================
         // after adding, we always have to call the
@@ -83,17 +86,21 @@ public class HW4 {
         IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(
                 indexLocation)));
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
+//        TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
 
-        s = "";
-        while (!s.equalsIgnoreCase("q")) {
+        List<String> queryList = Arrays.asList("hurricane isabel damage", "forecast models",
+                "green energy canada", "heavy rains", "hurricane music lyrics", "accumulated snow", "snow accumulation",
+                "massive blizzards blizzard", "new york city subway");
+        int index = 0;
+        while (index < queryList.size()) {
             try {
-                System.out.println("Enter the search query (q=quit):");
-                s = br.readLine();
-                if (s.equalsIgnoreCase("q")) {
-                    break;
-                }
+//                System.out.println("Enter the search query (q=quit):");
+                s = queryList.get(index++);
+//                if (s.equalsIgnoreCase("q")) {
+//                    break;
+//                }
 
+                TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
                 Query q = new QueryParser(Version.LUCENE_47, "contents",
                         sAnalyzer).parse(s);
                 searcher.search(q, collector);
@@ -101,14 +108,18 @@ public class HW4 {
 
                 // 4. output results
                 System.out.println("Found " + hits.length + " hits.");
-                System.out.println("Enter the file name to store the results (e.g  query_name.txt");
-                String fileName = br.readLine();
-                PrintWriter out = new PrintWriter(new File(fileName));
+//                System.out.println("Enter the file name to store the results (e.g  query_name.txt)");
+                String fileName = s.replaceAll(" ","_") + "_Lucene.txt";
+                PrintWriter out = new PrintWriter(new File("./docs/" + fileName));
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-                    out.println((i + 1) + ". " + d.get("path")
-                            + " score=" + hits[i].score);
+//                    System.out.println(docId + " " + d);
+                    String[] temp = d.get("path").split("\\\\");
+                    String docName = temp[temp.length - 1];
+                    docName = docName.substring(0, docName.length() - 4);
+                    out.println(index + " Q0 " + docName + " "
+                            + (i + 1) + " " + hits[i].score + " Lucene_4.7.2");
                 }
 
                 // 5. term stats --> watch out for which "version" of the term
@@ -124,7 +135,7 @@ public class HW4 {
                 System.out.println("Error searching " + s + " : "
                         + e);
                 e.printStackTrace();
-//                break;
+                break;
             }
 
         }
