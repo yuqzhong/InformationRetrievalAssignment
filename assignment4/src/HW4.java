@@ -83,10 +83,6 @@ public class HW4 {
         // =========================================================
         // Now search
         // =========================================================
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(
-                indexLocation)));
-        IndexSearcher searcher = new IndexSearcher(reader);
-//        TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
 
         List<String> queryList = Arrays.asList("hurricane isabel damage", "forecast models",
                 "green energy canada", "heavy rains", "hurricane music lyrics", "accumulated snow", "snow accumulation",
@@ -100,6 +96,9 @@ public class HW4 {
 //                    break;
 //                }
 
+                IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(
+                        indexLocation)));
+                IndexSearcher searcher = new IndexSearcher(reader);
                 TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
                 Query q = new QueryParser(Version.LUCENE_47, "contents",
                         sAnalyzer).parse(s);

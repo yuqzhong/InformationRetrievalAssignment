@@ -20,9 +20,12 @@ public class task2 {
             createDfTfTable();
             docLengthCounter();
             // ranking file
-            List<String> queryList = Arrays.asList("hurricane isabel damage", "forecast models",
-                    "green energy canada", "heavy rains", "hurricane music lyrics", "accumulated snow", "snow accumulation",
-                    "massive blizzards blizzard", "new york city subway");
+//            List<String> queryList = Arrays.asList("hurricane isabel damage", "forecast models",
+//                    "green energy canada", "heavy rains", "hurricane music lyrics", "accumulated snow", "snow accumulation",
+//                    "massive blizzards blizzard", "new york city subway");
+            List<String> queryList = Arrays.asList("accumulated snow");
+
+            System.out.println("28 " + avdl);
             for (int i = 0; i < queryList.size(); i++) {
                 String q = queryList.get(i);
                 String fileName = q.replaceAll(" ","_") + "_task2.txt";
@@ -111,10 +114,11 @@ public class task2 {
         double R = 0;
         double ri = 0;
         double N = docNum;
-//        double[] score = new double[docNum];
-        int[] n = new int[q.length];
-        int[] qf = new int[q.length];
-        record[] r = new record[q.length];
+        Set<Integer> docSet = new HashSet<>();
+
+        int[] n = new int[q.length]; // query term document frequency
+        int[] qf = new int[q.length]; // query term frequency
+        record[] r = new record[q.length]; // query inverted list
 
         // Count query based ni value and retrieve the inverted list related to query (r[i])
         for (int i = 0; i < q.length; i++) {
@@ -128,24 +132,35 @@ public class task2 {
 
             int rLoc = Collections.binarySearch(tfList, new record(q[i], new ArrayList<>()), Comparator.comparing(a -> a.term));
             r[i] = tfList.get(rLoc);
+            for (int[] arr : r[i].list) {
+                docSet
+            }
+            System.out.println(q[i] + " : term frequency is " + qf[i] + ", df is " + n[i]);
         }
 
         // count document BM25 score
         for (int i = 0; i < docNum; i++) {
             double score = 0;
-            double K = k1 * ((1 - b) + b * dl[i] / avdl);
+            double K = k1 * ((1 - b) + b * ((double)dl[i] / (double)avdl));
+            System.out.println("Document " + (i + 1) + " K = " + K);
             for (int j = 0; j < q.length; j++) {
                 List<int[]> list = r[j].list;
-                int fi = 0;
+                int fi = 0; // term frequency in this document
                 for (int[] arr: list) {
                     if (arr[0] == i + 1) {
                         fi = arr[1];
                         break;
                     }
                 }
-                score += Math.log(((ri + 0.5) / (R - ri + 0.5)) / ((n[j] - ri + 0.5) / (N - n[j] - R + ri + 0.5))
-                        * ((k1 + 1) * fi / (K + fi)) * ((k2 + 1) * qf[j] / (k2 + qf[j])));
+                if (fi != 0) {
+                    score += Math.log(((ri + 0.5) / (R - ri + 0.5)) / ((n[j] - ri + 0.5) / (N - n[j] - R + ri + 0.5)))
+                            * ((k1 + 1) * fi / (K + fi)) * ((k2 + 1) * qf[j] / (k2 + qf[j]));
+//                    score += Math.log10((1 / ((n[j] + 0.5) / (N - n[j] + 0.5)))
+//                            * ((k1 + 1) * fi / (K + fi)) * ((k2 + 1) * qf[j] / (k2 + qf[j])));
+                }
+                System.out.println((i + 1) + ": " + q[j] + " , fi is " + fi + " , doc length is " + dl[i] + " score is " + score);
             }
+
             if (heap.size() < resultNum) {
                 heap.offer(new docScore(i + 1, score));
             } else if (score > heap.peek().score) {
@@ -165,8 +180,9 @@ public class task2 {
             for (int i = 0; i < resultNum; i++) {
                 out.println(index + " Q0 " + res[i].docId + " "
                         + (i + 1) + " " + res[i].score + " Yuqing_RModel");
-                System.out.println((i + 1) + ". " + index + " " + res[i].docId + " scored: " + res[i].score);
+//                System.out.println((i + 1) + ". " + index + " " + res[i].docId + " scored: " + res[i].score);
             }
+            out.close();
         } catch (Exception e) {
             System.out.println("Could not write " + outFileName);
         }
