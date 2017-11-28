@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 public class task2 {
@@ -19,13 +17,14 @@ public class task2 {
         try {
             createDfTfTable();
             docLengthCounter();
-            // ranking file
+
 //            List<String> queryList = Arrays.asList("hurricane isabel damage", "forecast models",
 //                    "green energy canada", "heavy rains", "hurricane music lyrics", "accumulated snow", "snow accumulation",
 //                    "massive blizzards blizzard", "new york city subway");
             List<String> queryList = Arrays.asList("accumulated snow");
 
-            System.out.println("28 " + avdl);
+            System.out.println("AVDL is " + avdl);
+            // ranking file
             for (int i = 0; i < queryList.size(); i++) {
                 String q = queryList.get(i);
                 String fileName = q.replaceAll(" ","_") + "_task2.txt";
@@ -41,16 +40,6 @@ public class task2 {
     public void createDfTfTable() throws IOException{
         dfList = new ArrayList<>();
         tfList = new ArrayList<>();
-//        Scanner dfIn = new Scanner(new File("df-unigram.txt"), "utf-8");
-//        while (dfIn.hasNext()) {
-//            String str = dfIn.next();
-//            int df = dfIn.nextInt();
-//            String s = dfIn.next();
-//            while (!s.equals(")")) {
-//                s = dfIn.next();
-//            }
-//            dfList.add(new strNum(str, df));
-//        }
 
         Scanner in = new Scanner(new File("unigram.txt"), "utf-8");
         String buffer = "";
@@ -81,6 +70,23 @@ public class task2 {
             tfList.add(new record(s, list));
             dfList.add(new strNum(s, list.size()));
         }
+//        String s = "";
+//        while (!s.equals("q")) {
+//            System.out.println("Enter term to check for tf and df");
+//            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//            s = br.readLine();
+//            if (s.equals("q")) {
+//                break;
+//            }
+//            int location = Collections.binarySearch(dfList, new strNum(s, 0), Comparator.comparing(a -> a.str));
+//            int rLoc = Collections.binarySearch(tfList, new record(s, new ArrayList<>()), Comparator.comparing(a -> a.term));
+//            System.out.println("Term: " + s + ", df is " + dfList.get(location).num);
+//            System.out.print("Inverted List is ");
+//            List<int[]> list = tfList.get(rLoc).list;
+//            for (int[] arr: list) {
+//                System.out.print("(" + arr[0] + ", " + arr[1] + ") ");
+//            }
+//        }
         in.close();
     }
 
@@ -107,7 +113,7 @@ public class task2 {
 
     public void BM25Ranking (int index, String[] q, int resultNum, String outFileName){
         System.out.println(q);
-        PriorityQueue<docScore> heap = new PriorityQueue<>(resultNum);
+        List<docScore> scoreList = new ArrayList<>();
         double k1 = 1.2;
         double b = 0.75;
         double k2 = 100;
@@ -122,8 +128,10 @@ public class task2 {
 
         // Count query based ni value and retrieve the inverted list related to query (r[i])
         for (int i = 0; i < q.length; i++) {
+            // Because dfList are created in lexi order
             int location = Collections.binarySearch(dfList, new strNum(q[i], 0), Comparator.comparing(a -> a.str));
             n[i] = dfList.get(location).num;
+
             for (int j = 0; j < q.length; j++) {
                 if (q[i].equals(q[j])) {
                     qf[i]++;
@@ -132,22 +140,28 @@ public class task2 {
 
             int rLoc = Collections.binarySearch(tfList, new record(q[i], new ArrayList<>()), Comparator.comparing(a -> a.term));
             r[i] = tfList.get(rLoc);
+
             for (int[] arr : r[i].list) {
-                docSet
+                docSet.add(arr[0]);
             }
             System.out.println(q[i] + " : term frequency is " + qf[i] + ", df is " + n[i]);
         }
 
+        for (Integer i: docSet) {
+            System.out.print(i + " ");
+        }
+
         // count document BM25 score
-        for (int i = 0; i < docNum; i++) {
+        // docId starting from 1
+        for (Integer i : docSet) {
             double score = 0;
-            double K = k1 * ((1 - b) + b * ((double)dl[i] / (double)avdl));
-            System.out.println("Document " + (i + 1) + " K = " + K);
+            double K = k1 * ((1 - b) + b * ((double)dl[i - 1] / (double)avdl));
+            System.out.println("Document " + i + " K = " + K);
             for (int j = 0; j < q.length; j++) {
                 List<int[]> list = r[j].list;
                 int fi = 0; // term frequency in this document
                 for (int[] arr: list) {
-                    if (arr[0] == i + 1) {
+                    if (arr[0] == i) {
                         fi = arr[1];
                         break;
                     }
@@ -155,32 +169,22 @@ public class task2 {
                 if (fi != 0) {
                     score += Math.log(((ri + 0.5) / (R - ri + 0.5)) / ((n[j] - ri + 0.5) / (N - n[j] - R + ri + 0.5)))
                             * ((k1 + 1) * fi / (K + fi)) * ((k2 + 1) * qf[j] / (k2 + qf[j]));
-//                    score += Math.log10((1 / ((n[j] + 0.5) / (N - n[j] + 0.5)))
-//                            * ((k1 + 1) * fi / (K + fi)) * ((k2 + 1) * qf[j] / (k2 + qf[j])));
                 }
-                System.out.println((i + 1) + ": " + q[j] + " , fi is " + fi + " , doc length is " + dl[i] + " score is " + score);
+                System.out.println(i + ": " + q[j] + " , fi is " + fi + " , doc length is " + dl[i - 1] + " score is " + score);
             }
 
-            if (heap.size() < resultNum) {
-                heap.offer(new docScore(i + 1, score));
-            } else if (score > heap.peek().score) {
-                heap.poll();
-                heap.offer(new docScore(i + 1, score));
-            }
+            scoreList.add(new docScore(i, score));
         }
 
 
         /// output result
-        docScore[] res = new docScore[resultNum];
-        for (int i = resultNum - 1; i >= 0; i--){
-            res[i] = heap.poll();
-        }
+        scoreList.sort(Comparator.comparing(a -> -a.score));
         try {
             PrintWriter out = new PrintWriter(new File(outFileName));
-            for (int i = 0; i < resultNum; i++) {
-                out.println(index + " Q0 " + res[i].docId + " "
-                        + (i + 1) + " " + res[i].score + " Yuqing_RModel");
-//                System.out.println((i + 1) + ". " + index + " " + res[i].docId + " scored: " + res[i].score);
+            for (int i = 0; i < resultNum && i < scoreList.size(); i++) {
+                docScore ith = scoreList.get(i);
+                out.println(index + " Q0 " + ith.docId + " "
+                        + (i + 1) + " " + ith.score+ " Yuqing_RModel");
             }
             out.close();
         } catch (Exception e) {
